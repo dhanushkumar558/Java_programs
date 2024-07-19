@@ -10,17 +10,17 @@ public class LoginSignUpDemo extends JFrame {
     private JPanel mainPanel;
 
     public LoginSignUpDemo() {
-        // Initialize the frame
+       
         setTitle("Login and Sign-Up");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Initialize the CardLayout and main panel
+      
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
 
-        // Create and add the login form and sign-up form
+      
         JPanel loginForm = createLoginForm();
         JPanel signUpForm = createSignUpForm();
 
@@ -29,7 +29,7 @@ public class LoginSignUpDemo extends JFrame {
 
         add(mainPanel);
 
-        // Show the login form initially
+     
         cardLayout.show(mainPanel, "login");
     }
 
@@ -46,10 +46,10 @@ public class LoginSignUpDemo extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Handle login logic here
+                
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
-                // Add your authentication logic here
+                
                 JOptionPane.showMessageDialog(panel, "Logged in successfully!");
             }
         });
