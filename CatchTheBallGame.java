@@ -93,12 +93,12 @@ public class CatchTheBallGame extends JFrame implements KeyListener, ActionListe
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // Not used
+        
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        // Not used
+        
     }
 
     public static void main(String[] args) {
