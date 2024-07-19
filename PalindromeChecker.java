@@ -8,10 +8,10 @@ public class PalindromeChecker {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // Remove spaces and convert to lowercase for uniform comparison
+        
         String cleanedInput = input.replaceAll("\\s+", "").toLowerCase();
 
-        // Check if the cleaned input is a palindrome
+       
         boolean isPalindrome = isPalindrome(cleanedInput);
 
         if (isPalindrome) {
