@@ -19,7 +19,7 @@ public class TicTacToe extends JFrame implements ActionListener {
 
        
         buttons = new JButton[3][3];
-        xTurn = true; // X starts
+        xTurn = true; 
 
         
         statusLabel = new JLabel("X's Turn", JLabel.CENTER);

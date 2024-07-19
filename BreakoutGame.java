@@ -7,14 +7,18 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class PongGame extends JFrame implements ActionListener, KeyListener {
+public class BreakoutGame extends JFrame implements ActionListener, KeyListener {
     private Timer timer;
     private int ballX, ballY, ballDiameter, ballXSpeed, ballYSpeed;
     private int paddleX, paddleY, paddleWidth, paddleHeight;
-    private int paddleSpeed, score;
+    private int paddleSpeed;
+    private boolean[][] bricks;
+    private final int brickWidth = 60, brickHeight = 20;
+    private final int rows = 5, cols = 10;
+    private int score;
 
-    public PongGame() {
-        setTitle("Pong Game");
+    public BreakoutGame() {
+        setTitle("Breakout Game");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -24,14 +28,21 @@ public class PongGame extends JFrame implements ActionListener, KeyListener {
         ballDiameter = 20;
         ballX = getWidth() / 2 - ballDiameter / 2;
         ballY = getHeight() / 2 - ballDiameter / 2;
-        ballXSpeed = 5;
-        ballYSpeed = 3;
+        ballXSpeed = 4;
+        ballYSpeed = 4;
 
         paddleWidth = 100;
         paddleHeight = 10;
         paddleX = getWidth() / 2 - paddleWidth / 2;
         paddleY = getHeight() - paddleHeight - 30;
         paddleSpeed = 20;
+
+        bricks = new boolean[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                bricks[i][j] = true;
+            }
+        }
 
         score = 0;
 
@@ -51,6 +62,15 @@ public class PongGame extends JFrame implements ActionListener, KeyListener {
 
         g.setColor(Color.BLUE);
         g.fillRect(paddleX, paddleY, paddleWidth, paddleHeight);
+
+        g.setColor(Color.GREEN);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (bricks[i][j]) {
+                    g.fillRect(j * brickWidth, i * brickHeight, brickWidth, brickHeight);
+                }
+            }
+        }
 
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 20));
@@ -73,7 +93,21 @@ public class PongGame extends JFrame implements ActionListener, KeyListener {
         
         if (ballY >= paddleY - ballDiameter && ballX + ballDiameter >= paddleX && ballX <= paddleX + paddleWidth) {
             ballYSpeed = -ballYSpeed;
-            score++;
+        }
+
+        
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (bricks[i][j] &&
+                    ballX + ballDiameter >= j * brickWidth &&
+                    ballX <= (j + 1) * brickWidth &&
+                    ballY + ballDiameter >= i * brickHeight &&
+                    ballY <= (i + 1) * brickHeight) {
+                    bricks[i][j] = false;
+                    ballYSpeed = -ballYSpeed;
+                    score += 10;
+                }
+            }
         }
 
         
@@ -88,10 +122,17 @@ public class PongGame extends JFrame implements ActionListener, KeyListener {
     private void resetGame() {
         ballX = getWidth() / 2 - ballDiameter / 2;
         ballY = getHeight() / 2 - ballDiameter / 2;
-        ballXSpeed = 5;
-        ballYSpeed = 3;
+        ballXSpeed = 4;
+        ballYSpeed = 4;
         paddleX = getWidth() / 2 - paddleWidth / 2;
+        paddleY = getHeight() - paddleHeight - 30;
         score = 0;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                bricks[i][j] = true;
+            }
+        }
     }
 
     @Override
@@ -107,15 +148,15 @@ public class PongGame extends JFrame implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-      
+        
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-    
+        
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new PongGame().setVisible(true));
+        SwingUtilities.invokeLater(() -> new BreakoutGame().setVisible(true));
     }
 }
